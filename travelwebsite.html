@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 6 – Travel Booking Portal</title>
+    <link rel="stylesheet" href="voyager_theme.css" type="text/css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+            color: #1b1f3b;
+            background-color: transparent;
+            line-height: 1.6;
+            letter-spacing: 0.2px;
+            scroll-behavior: smooth;
+            transition: all 0.3s ease;
+            text-rendering: optimizeLegibility;
+        }
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #c7d2fe 50%, #f8fafc 100%);
+            margin: 0;
+            padding: 48px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-attachment: fixed;
+            background-size: cover;
+            backdrop-filter: saturate(1.25);
+            gap: 32px;
+            overflow-x: hidden;
+        }
+        #main-content {
+            max-width: 1080px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            align-items: stretch;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            border-radius: 22px;
+            background-color: rgba(255, 255, 255, 0.92);
+            padding: 36px;
+            box-shadow: 0 24px 48px rgba(15, 23, 42, 0.16);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        section {
+            margin-bottom: 24px;
+            padding: 24px;
+            background-color: rgba(248, 250, 252, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            isolation: isolate;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(241, 245, 249, 0.98);
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+            margin-top: 8px;
+            font-size: 1rem;
+            color: #101828;
+            text-align: left;
+            letter-spacing: 0.3px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background-color: rgba(241, 245, 249, 0.92);
+            padding: 20px;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+            max-width: 520px;
+            width: 100%;
+            align-self: center;
+            backdrop-filter: blur(6px);
+            transition: transform 0.3s ease;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-field label {
+            font-weight: 600;
+        }
+        .action-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .action-row button {
+            flex-shrink: 0;
+        }
+        .option-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .option-row > div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #team {
+            background-color: rgba(248, 250, 252, 0.95);
+            border-radius: 14px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 20px;
+        }
+        #team h2 {
+            font-size: 2rem;
+            color: #0f172a;
+        }
+        #team .muted {
+            color: #475569;
+            font-size: 1rem;
+        }
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: stretch;
+        }
+        .team-grid .card {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 14px;
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+            min-height: 170px;
+            text-align: left;
+            flex: 0 1 calc(33.333% - 10px);
+            max-width: calc(33.333% - 10px);
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .team-grid .card .name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f172a;
+        }
+        .team-grid .card header {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 6px;
+        }
+        .team-grid .card .role {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 0;
+        }
+        .team-grid .card .detail {
+            font-size: 0.9rem;
+            color: #334155;
+            margin: 6px 0 0;
+            line-height: 1.4;
+        }
+        .team-grid .card .detail + .detail {
+            margin-top: 8px;
+        }
+        .service-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .service-row > div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .interactive-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .interactive-actions > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            max-width: 240px;
+        }
+    </style>
+</head>
+<body onload="alert('Welcome to Group 6 Travel Booking Portal!'); initializePage();">
+<!-- 
+        Group 6 Members: Chidinma Nwankwo Miracle BU/24C/IT/11081, Samuel Korede Meseko BU/24C/IT/11104, Mayamba Yusuf Alfa BU/24C/IT/10683, Adeyemi Abdussalam Bello BU/24C/IT/11103, Al-mustapha Auwal Mohammed BU/24C/IT/10651, Chidubem Michael Uwakwe BU/25A/IT/11894, Ameena Ibrahim BU/24C/IT/11132, Munachisom Soluchi Agu BU/24C/IT/11345, Abbani Abduljalal Tijjani BU/25A/IT/11737
+        Purpose: To create a travel booking portal page showcasing HTML elements
+    -->
+    <div id="main-content" class="page-container">
+        <section class="section-card intro-section">
+            <h1 class="hero-heading" style="color: #0f172a; background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(15, 23, 42, 0.1)); padding: 18px 24px; text-align: center; font-size: 2.75rem; letter-spacing: 0.12rem; border-radius: 20px; border: 2px solid rgba(14, 165, 233, 0.5); box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18); text-transform: uppercase; margin-bottom: 12px;">Group 6 Travel Booking Portal</h1>
+            <p class="lead-paragraph" style="color: #0f172a; background-color: rgba(255, 255, 255, 0.85); padding: 16px 20px; font-size: 1.1rem; line-height: 1.8; border-left: 6px solid rgba(14, 165, 233, 0.6); border-radius: 16px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12); margin: 0; text-align: center; letter-spacing: 0.05rem;"><strong>Explore</strong> amazing destinations and <em>book</em> your next trip with us!</p>
+        </section>
+
+        <section class="section-card interactive-section">
+            <div>
+                <p id="user-greeting">Hello, curious traveler!</p>
+                <p id="user-topic"></p>
+            </div>
+            <div class="interactive-actions">
+                <div>
+                    <button type="button" onclick="handleInlineGreeting()" style="background-image: linear-gradient(135deg, #f97316, #facc15); color: #0f172a; padding: 12px 20px; font-weight: 600; border: none; border-radius: 12px;">Inline Greeting</button>
+                    <p id="inline-result" style="margin-top: 12px; font-style: italic;"></p>
+                </div>
+                <div>
+                    <button type="button" onclick="showTravelTip()" style="background-image: linear-gradient(135deg, #10b981, #059669); color: #ecfdf5; padding: 12px 20px; font-weight: 600; border: none; border-radius: 12px;">Get Travel Tip</button>
+                    <p id="external-message" style="margin-top: 12px;"></p>
+                </div>
+                <div>
+                    <button type="button" onclick="showBudgetEstimate()" style="background-image: linear-gradient(135deg, #6366f1, #4338ca); color: #eef2ff; padding: 12px 20px; font-weight: 600; border: none; border-radius: 12px;">Quick Estimate</button>
+                    <p id="budget-message" style="margin-top: 12px;"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card feature-section">
+            <h2 class="section-title">Featured Destination 🌍</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: center;">
+                <p style="background-color: rgba(14, 165, 233, 0.12); padding: 14px 18px; border-radius: 14px; text-align: center;">Visit <abbr title="United Arab Emirates">UAE</abbr> for an unforgettable experience.</p>
+                <p style="background-color: rgba(14, 165, 233, 0.18); padding: 14px 18px; border-radius: 14px; text-align: center;">Our best travel deal is <strong>Dubai 5-Day Tour</strong> for <code>$9,999</code>.</p>
+                <p style="background-color: rgba(14, 165, 233, 0.24); padding: 14px 18px; border-radius: 14px; text-align: center;">Book your <span style="color: blue;">dream vacation</span> with us today!</p>
+            </div>
+            <a class="featured-link" href="https://www.visitdubai.com" title="Visit Dubai Official Site" target="_blank">
+                <img class="featured-image" src="./images/dubai-skyline.jpg" alt="Beautiful view of Dubai city" width="400">
+            </a>
+        </section>
+
+        <section class="section-card packages-section">
+            <h3 class="subsection-title">Popular Travel Packages</h3>
+            <ul class="package-list" type="square">
+                <li>Paris Getaway</li>
+                <li>London Explorer</li>
+                <li>New York Adventure</li>
+            </ul>
+        </section>
+
+        <section class="section-card steps-section">
+            <h3 class="subsection-title">Steps to Book Your Trip</h3>
+            <ol class="steps-list" type="A">
+                <li>Book your flight</li>
+                <li>Choose your hotel</li>
+                <li>Enjoy your vacation</li>
+            </ol>
+        </section>
+
+        <section class="section-card glossary-section">
+            <h3 class="subsection-title">Travel Terms You Should Know</h3>
+            <dl class="definition-grid">
+                <div class="definition-item">
+                    <dt>Visa</dt>
+                    <dd>Document required for entry to another country.</dd>
+                </div>
+                <div class="definition-item">
+                    <dt>Itinerary</dt>
+                    <dd>Detailed plan of travel activities.</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="section-card table-section">
+            <h2 class="section-title">Available Travel Packages</h2>
+            <table border="1" width="80%" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th colspan="2">Package Details</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">Dubai</td>
+                        <td>Duration</td>
+                        <td>5 Days</td>
+                        <td>$9,999</td>
+                    </tr>
+                    <tr>
+                        <td>Hotel</td>
+                        <td>5-Star Resort</td>
+                        <td>$9,999</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" align="center">Book early and save 10%!</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+        
+        <section class="section-card form-section">
+            <h2 class="section-title">Travel Registration Form</h2>
+            <form class="booking-form" action="#" method="post">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="fullname" placeholder="Enter your name" title="Your full name" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="confirm-email">Confirm Email Address:</label>
+                        <div class="action-row">
+                            <input type="email" id="confirm-email" name="confirmEmail" placeholder="Re-enter your email" required>
+                            <button type="button" onclick="checkEmails()" style="background-image: linear-gradient(135deg, #0ea5e9, #38bdf8); color: #0f172a; padding: 10px 16px; font-weight: 600; border: none; border-radius: 10px;">Verify</button>
+                        </div>
+                        <p id="email-feedback" style="font-weight: 600; margin: 0;"></p>
+                    </div>
+                    <div class="form-field">
+                        <label for="destination">Select Destination:</label>
+                        <select id="destination" name="destination" required>
+                            <option value="">--Choose Destination--</option>
+                            <option value="dubai">Dubai</option>
+                            <option value="paris">Paris</option>
+                            <option value="newyork">New York</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <span style="font-weight: 600;">Travel Class:</span>
+                    <div class="option-row">
+                        <div>
+                            <input type="radio" id="economy" name="class" value="economy" required>
+                            <label for="economy">Economy</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="business" name="class" value="business">
+                            <label for="business">Business</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <span style="font-weight: 600;">Additional Services:</span>
+                    <div class="service-row">
+                        <div>
+                            <input type="checkbox" id="insurance" name="service[]" value="insurance">
+                            <label for="insurance">Travel Insurance</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="guide" name="service[]" value="guide">
+                            <label for="guide">Tour Guide</label>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin: 4px 0;">Note: Prices may vary due to rates (1 USD ≈ 1.10<sub>EUR</sub>) or 5<sup>%</sup> tax.</p>
+
+                <input type="submit" value="Submit Booking" style="background-image: linear-gradient(135deg, #0ea5e9, #1e3a8a); color: #ffffff; padding: 14px 24px; font-size: 1rem; font-weight: 600; border: 2px solid rgba(14, 165, 233, 0.6); border-radius: 14px; box-shadow: 0 16px 30px rgba(15, 23, 42, 0.18); text-transform: uppercase; letter-spacing: 0.16rem; transition: transform 0.3s ease;">
+            </form>
+        </section>
+
+        <section id="team">
+            <h2>Team</h2>
+            <p class="muted">Meet the Group 6 team and how we delivered this page.</p>
+            <div class="team-grid">
+                <article class="card">
+                    <header>
+                        <p class="name">Chidinma Nwankwo</p>
+                        <p class="role">Project Lead & Information Architecture</p>
+                    </header>
+                    <p class="detail">Added the clickable image, external link behavior, and alt text fallbacks.</p>
+                    <p class="detail">Composed unordered, ordered, and description lists with meaningful attributes.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Samuel Meseko</p>
+                        <p class="role">HTML Skeleton</p>
+                    </header>
+                    <p class="detail">Shaped the visual hierarchy, spacing, and readability across headers, sections, and forms.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Yusuf Alfa</p>
+                        <p class="role">Frontend Markup</p>
+                    </header>
+                    <p class="detail">Coordinated headings for section titles and paragraph structure for content clarity.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Adeyemi Bello</p>
+                        <p class="role">Forms & Accessibility</p>
+                    </header>
+                    <p class="detail">Built the registration form with well-labeled inputs and user-friendly titles.</p>
+                    <p class="detail">Crafted the pricing table using thead, tbody, tfoot, colspan, and rowspan techniques.</p>
+                </article>
+                
+                <article class="card">
+                    <header>
+                        <p class="name">Ameena Ibrahim</p>
+                        <p class="role">Tags & Attributes</p>
+                    </header>
+                    <p class="detail">Demonstrated essential HTML tags and ensured title/alt attributes supported accessibility.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Soluchi Agu</p>
+                        <p class="role">Lists & Content</p>
+                    </header>
+                    <p class="detail">Curated list structures and refined supporting copy to match the travel theme.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Karibi Joel</p>
+                        <p class="role">Quality Assurance</p>
+                    </header>
+                    <p class="detail">Verified spec coverage, validated attributes, and cross-checked markup semantics.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Michael Uwakwe</p>
+                        <p class="role">Performance & Polish</p>
+                    </header>
+                    <p class="detail">Optimized lightweight styling and preserved responsive spacing throughout the page.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Abbani Tijjani</p>
+                        <p class="role">Documentation</p>
+                    </header>
+                    <p class="detail">Authored the page comment block outlining team members and project purpose.</p>
+                </article>
+                <article class="card">
+                    <header>
+                        <p class="name">Al-mustapha Auwal</p>
+                        <p class="role">Integration & Final Review</p>
+                    </header>
+                    <p class="detail">Integrated block and inline elements, resolved final issues, and packaged the deliverable.</p>
+                </article>
+            </div>
+            <hr />
+          </section>
+          
+        <section class="section-card snapshot-section">
+            <h3 class="subsection-title">Portal Snapshot</h3>
+            <ul style="list-style: circle; padding-left: 20px;">
+                <li id="portal-email"></li>
+                <li id="portal-message"></li>
+                <li id="portal-product"></li>
+            </ul>
+        </section>
+
+    </div>
+    <script>
+        let activeMessageId = null;
+
+        function toggleMessage(targetId, getContent) {
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) {
+                return;
+            }
+
+            const isSameTarget = activeMessageId === targetId && targetEl.textContent.trim().length > 0;
+
+            if (isSameTarget) {
+                targetEl.textContent = '';
+                activeMessageId = null;
+                return;
+            }
+
+            if (activeMessageId && activeMessageId !== targetId) {
+                const previousEl = document.getElementById(activeMessageId);
+                if (previousEl) {
+                    previousEl.textContent = '';
+                }
+            }
+
+            const content = typeof getContent === 'function' ? getContent() : getContent;
+            targetEl.textContent = content;
+            activeMessageId = targetId;
+        }
+
+        function handleInlineGreeting() {
+            toggleMessage('inline-result', 'Inline script says hi! Enjoy exploring our offers.');
+        }
+
+        function initializePage() {
+            const nameResponse = window.prompt('Welcome! What is your name?');
+            const topicResponse = window.prompt('What travel topic are you interested in today?');
+
+            const travelerName = nameResponse && nameResponse.trim() ? nameResponse.trim() : 'Valued Explorer';
+            const email = 'contact@group6travel.com';
+            const message = 'We craft journeys that celebrate culture, color, and comfort.';
+            const productName = 'Dubai 5-Day Tour';
+
+            const userGreetingEl = document.getElementById('user-greeting');
+            const userTopicEl = document.getElementById('user-topic');
+            const portalEmailEl = document.getElementById('portal-email');
+            const portalMessageEl = document.getElementById('portal-message');
+            const portalProductEl = document.getElementById('portal-product');
+
+            if (userGreetingEl) {
+                userGreetingEl.textContent = `Welcome "${travelerName}"`;
+            }
+
+            if (userTopicEl) {
+                userTopicEl.textContent = topicResponse ? `You are curious about: ${topicResponse}.` : 'Let us surprise you with curated adventures.';
+            }
+
+            if (portalEmailEl) {
+                portalEmailEl.textContent = `Support Email: ${email}`;
+            }
+
+            if (portalMessageEl) {
+                portalMessageEl.textContent = `Signature Message: ${message}`;
+            }
+
+            if (portalProductEl) {
+                portalProductEl.textContent = `Featured Package: ${productName}`;
+            }
+        }
+
+        function checkEmails() {
+            const emailValue = document.getElementById('email').value;
+            const confirmEmailValue = document.getElementById('confirm-email').value;
+            const feedbackEl = document.getElementById('email-feedback');
+
+            if (!emailValue || !confirmEmailValue) {
+                feedbackEl.textContent = 'Please enter both email addresses to continue.';
+                feedbackEl.style.color = '#b45309';
+                return;
+            }
+
+            if (emailValue === confirmEmailValue) {
+                feedbackEl.textContent = 'Great! Your email addresses match.';
+                feedbackEl.style.color = '#047857';
+            } else {
+                feedbackEl.textContent = 'Oops! The email addresses do not match. Please check again.';
+                feedbackEl.style.color = '#dc2626';
+            }
+        }
+    </script>
+    <script src="travel_website.js"></script>
+</body>
+</html>
